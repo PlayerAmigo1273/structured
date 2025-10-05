@@ -10,16 +10,21 @@ meaning an identifier that does not have spaces or symbols.
 # if !defined(STRUCTURED_HASH_FUNCTION)
 	 #error You must define a hashing function for your key type.
 # else
-#	 include "hash_map.h"
 
-#	 include "../structured.h"
+#	 if !defined(STRUCTURED_COMPARISON_FUNCTION)
+    #error You must define a comparison function for your keys.
+#  else
 
-#	 include <stdio.h>
-#	 include <string.h>
+#	  include "hash_map.h"
 
-#  define PREFIX(x) STRUCTURED_ID(STRUCTURED_POSTFIX(STRUCTURED_KEY_TYPE_NAME, STRUCTURED_VALUE_TYPE_NAME), x)
-#	 define HASH_NODE PREFIX(hash_node)
-#	 define HASH_MAP PREFIX(hash_map)
+#	  include "../structured.h"
+
+#	  include <stdio.h>
+#	  include <string.h>
+
+#   define PREFIX(x) STRUCTURED_ID(STRUCTURED_POSTFIX(STRUCTURED_KEY_TYPE_NAME, STRUCTURED_VALUE_TYPE_NAME), x)
+#	  define HASH_NODE PREFIX(hash_node)
+#	  define HASH_MAP PREFIX(hash_map)
 
 void PREFIX(hash_map_create)(struct HASH_MAP * map, uint64_t capacity, struct HASH_NODE * nodes) {
 	map->capacity = capacity;
@@ -66,7 +71,7 @@ static int node_iterator(struct HASH_MAP * map, STRUCTURED_KEY_TYPE key, uint64_
 	}
 
 	// If an occupied node has a matching key, it's the one.
-	if ((map->nodes[n].key == key) || structured_streq(map->nodes[n].key, key)) {
+	if ((map->nodes[n].key == key) || STRUCTURED_COMPARISON_FUNCTION(map->nodes[n].key, key)) {
 		// Return &(map->nodes[n]).
 		*result = (void *) &(map->nodes[n]);
 		return STRUCTURED_CONTROL_RETURN;
@@ -93,7 +98,7 @@ static int ins_iterator(struct HASH_MAP * map, STRUCTURED_KEY_TYPE key, uint64_t
 	struct ins_iterator_args * iterator_args = (struct ins_iterator_args *) args;
 
 	if (map->nodes[n].status == STRUCTURED_HASH_NODE_OCCUPIED) {
-		if (structured_streq(map->nodes[n].key, key)) {
+		if (STRUCTURED_COMPARISON_FUNCTION(map->nodes[n].key, key)) {
 			if (iterator_args->overwrite) {
 				map->nodes[n].key = key;
 				map->nodes[n].value = iterator_args->value;
@@ -133,7 +138,7 @@ int PREFIX(hash_map_ins)(struct HASH_MAP * map, STRUCTURED_KEY_TYPE key, STRUCTU
 }
 
 int PREFIX(hash_map_del)(struct HASH_MAP * map, STRUCTURED_KEY_TYPE key) {
-	struct structured_ccharp_int_hash_node * node_ptr;
+	struct HASH_NODE * node_ptr;
 	int error = PREFIX(hash_map_node)(map, key, &node_ptr);
 	if (!error) {
 		node_ptr->status = STRUCTURED_HASH_NODE_DELETED;
@@ -163,10 +168,10 @@ void PREFIX(hash_map_printf)(const struct HASH_MAP * map, const char * key_forma
 	printf(", %s}}", structured_hash_strstatus(node.status));
 }
 
-#	 undef PREFIX
-#	 undef HASH_NODE
-#	 undef HASH_MAP
+#	  undef PREFIX
+#	  undef HASH_NODE
+#	  undef HASH_MAP
 
-#	endif
-
+#	 endif
+# endif
 #endif

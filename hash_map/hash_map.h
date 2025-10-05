@@ -11,15 +11,19 @@ meaning an identifier that does not have spaces or symbols.
 	 #error You must define a hashing function for your key type.
 # else
 
-#	 include "../affix.h"
-#  define PREFIX(x) STRUCTURED_ID(STRUCTURED_POSTFIX(STRUCTURED_KEY_TYPE_NAME, STRUCTURED_VALUE_TYPE_NAME), x)
-#	 define HASH_NODE PREFIX(hash_node)
-#	 define HASH_MAP PREFIX(hash_map)
+#	 if !defined(STRUCTURED_COMPARISON_FUNCTION)
+    #error You must define a comparison function for your keys.
+#  else
 
-#	 include "status.h"
+#	  include "../affix.h"
+#   define PREFIX(x) STRUCTURED_ID(STRUCTURED_POSTFIX(STRUCTURED_KEY_TYPE_NAME, STRUCTURED_VALUE_TYPE_NAME), x)
+#	  define HASH_NODE PREFIX(hash_node)
+#	  define HASH_MAP PREFIX(hash_map)
 
-#	 include <stdint.h>
-#	 include <stdbool.h>
+#	  include "status.h"
+
+#	  include <stdint.h>
+#	  include <stdbool.h>
 
 struct HASH_NODE
 {
@@ -49,9 +53,10 @@ int PREFIX(hash_map_del)(struct HASH_MAP * map, STRUCTURED_KEY_TYPE key);
 
 void PREFIX(hash_map_printf)(const struct HASH_MAP * map, const char * key_format, const char * value_format);
 
-#	 undef HASH_MAP
-#	 undef HASH_NODE
-#  undef PREFIX
+#	  undef HASH_MAP
+#	  undef HASH_NODE
+#   undef PREFIX
 
+#  endif
 # endif
 #endif

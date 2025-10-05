@@ -16,6 +16,7 @@ uint64_t fnv1a_hash(const char * str) {
 #define STRUCTURED_VALUE_TYPE int
 #define STRUCTURED_VALUE_TYPE_NAME int
 #define STRUCTURED_HASH_FUNCTION fnv1a_hash
+#define STRUCTURED_COMPARISON_FUNCTION structured_streq
 #include "../hash_map_src.c"
 
 int main(void) {
