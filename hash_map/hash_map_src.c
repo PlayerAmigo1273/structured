@@ -71,7 +71,7 @@ static int node_iterator(struct HASH_MAP * map, STRUCTURED_KEY_TYPE key, uint64_
 	}
 
 	// If an occupied node has a matching key, it's the one.
-	if ((map->nodes[n].key == key) || STRUCTURED_COMPARISON_FUNCTION(map->nodes[n].key, key)) {
+	if (STRUCTURED_COMPARISON_FUNCTION(map->nodes[n].key, key)) {
 		// Return &(map->nodes[n]).
 		*result = (void *) &(map->nodes[n]);
 		return STRUCTURED_CONTROL_RETURN;
