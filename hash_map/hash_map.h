@@ -1,7 +1,4 @@
 
-#ifndef STRUCTURED_HASH_MAP_H
-#define STRUCTURED_HASH_MAP_H
-
 #if !(defined(STRUCTURED_KEY_TYPE) && defined(STRUCTURED_VALUE_TYPE) 					\
 	&& defined(STRUCTURED_KEY_TYPE_NAME) && defined(STRUCTURED_VALUE_TYPE_NAME) \
 )
@@ -57,5 +54,4 @@ void PREFIX(hash_map_printf)(const struct HASH_MAP * map, const char * key_forma
 #  undef PREFIX
 
 # endif
-#endif
 #endif

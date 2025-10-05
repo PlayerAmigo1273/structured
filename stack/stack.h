@@ -1,7 +1,4 @@
 
-#ifndef STRUCTURED_STACK_H
-#define STRUCTURED_STACK_H
-
 #if !(defined(STRUCTURED_TYPE) && defined(STRUCTURED_TYPE_NAME))
 #	error You must provide a type (STRUCTURED_TYPE). \
 You must also define the name for the type, meaning an identifier that does not have spaces \
@@ -28,5 +25,4 @@ void STRUCTURED_POSTFIX(structured_stack_printf, STRUCTURED_TYPE_NAME)(const str
 
 #	undef STACK
 
-#endif
 #endif

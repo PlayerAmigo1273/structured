@@ -1,7 +1,4 @@
 
-#ifndef STRUCTURED_ARRAY_H
-#define STRUCTURED_ARRAY_H
-
 #if !(defined(STRUCTURED_TYPE) && defined(STRUCTURED_TYPE_NAME))
 #	error You must provide a type (STRUCTURED_TYPE). \
 You must also define the name for the type, meaning an identifier that does not have spaces \
@@ -23,5 +20,4 @@ STRUCTURED_TYPE * structured_array_find(const struct ARRAY * array, STRUCTURED_T
 
 #	undef ARRAY
 
-#endif
 #endif
