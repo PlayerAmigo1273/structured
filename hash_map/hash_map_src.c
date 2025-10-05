@@ -15,8 +15,6 @@ meaning an identifier that does not have spaces or symbols.
     #error You must define a comparison function for your keys.
 #  else
 
-#	  include "hash_map.h"
-
 #	  include "../structured.h"
 
 #	  include <stdio.h>

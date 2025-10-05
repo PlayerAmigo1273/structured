@@ -5,8 +5,6 @@ You must also define the name for the type, meaning an identifier that does not 
 or symbols (STRUCTURED_TYPE_NAME).
 #else
 
-#	include "stack.h"
-
 #	include "structured.h"
 
 #	include <stdio.h>
