@@ -1,2 +1,2 @@
 # structured
-A personal header-only library for generic type data structures. Definitely isn't very optimized.
+A personal library for generic type data structures. Define the types. Include the .c files in your .c files. Include the .h files in your .h files.
